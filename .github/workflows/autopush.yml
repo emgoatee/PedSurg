@@ -1,0 +1,18 @@
+name: Auto Push Changes
+on:
+  push:
+    branches:
+      - main
+jobs:
+  push-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Push changes
+        run: |
+          git config --global user.name "Your Name"
+          git config --global user.email "your-email@example.com"
+          git add .
+          git commit -m "Automated commit: $(date)"
+          git push origin main
