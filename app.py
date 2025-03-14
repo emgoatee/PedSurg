@@ -276,5 +276,5 @@ with st.sidebar:
 # Footer
 st.markdown("---")
 st.markdown("""
-2025 Gootee MD. Allrights reserved.
+2025 Gootee MD. All rights reserved.
 """)
