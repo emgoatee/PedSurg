@@ -94,7 +94,7 @@ with st.sidebar:
 user_file = st.file_uploader("Upload your document (Excel)", type=["xlsx"], key="file_uploader_1")
 
 if user_file:
-    st.success("File uploaded successfully!")
+    st.success("File uploaded successfully! Please wait while we're working on your data.")
 
 # Define weights based on the updated formula
 weights = {
