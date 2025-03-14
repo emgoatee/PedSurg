@@ -1,0 +1,12 @@
+[theme]
+# Primary color for buttons, links, and accents
+primaryColor = "#0099B4"  # Teal
+
+# Background color for the main content area
+backgroundColor = "#FFFFFF"  # White
+
+# Background color for sidebar and other secondary elements
+secondaryBackgroundColor = "#FCDDE8"  # Light pink cchmc
+
+# Text color
+textColor = "#222A2E"  # Dark gray

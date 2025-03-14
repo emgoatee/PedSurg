@@ -5,6 +5,59 @@ import pandas as pd
 import streamlit as st
 from fuzzywuzzy import process, fuzz  # For fuzzy string matching
 
+# Custom CSS to load Roboto
+custom_css = """
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Apply Roboto to the entire app */
+html, body, [class*="css"] {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Customize headers */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;  /* Bold weight for headers */
+    color: #4CAF50;   /* Green color for headers */
+}
+
+/* Customize buttons */
+.stButton>button {
+    font-family: 'Roboto', sans-serif;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 24px;
+}
+</style>
+"""
+
+# Apply custom CSS
+st.markdown(custom_css, unsafe_allow_html=True)
+
+# App content
+st.title("📄 Article Evaluation Tool")
+st.markdown("""
+This tool evaluates articles based on disease prevalence, publication date, study design, and other factors. 
+Upload your list of articles to get started.
+""")
+
+# Sidebar
+with st.sidebar:
+    st.header("Instructions")
+    st.markdown("""
+    1. Upload an Excel file with the required columns: `Title`, `Abstract`, `Publication Year`, `Journal`.
+    2. The app will calculate scores and display the results.
+    3. Download the scored data as an Excel file.
+    """)
+
+# File uploader with a unique key
+user_file = st.file_uploader("Upload your document (Excel)", type=["xlsx"], key="file_uploader_1")
+
+if user_file:
+    st.success("File uploaded successfully!")
+
 # Define weights based on the updated formula
 weights = {
     'w1': 0.3,   # Relevance
@@ -147,12 +200,6 @@ def fuzzy_match_journal(journal, journal_list, threshold=90):
 
 # Streamlit app
 def main():
-    # Title and Description
-    st.title("📄 Article Evaluation Tool")
-    st.markdown("""
-    This tool evaluates articles based on disease prevalence, publication date, study design, and other factors. 
-    Upload your list of articles to get started.
-    """)
 
     # Load the normalized h-index file from the resources folder
     h_index_folder = "resources"  # Folder where the h-index file is stored
@@ -177,10 +224,6 @@ def main():
     else:
         st.error(f"Keyword Relevance file not found at {keyword_relevance_path}. Please ensure the file exists.")
         return
-
-    # Upload user document
-    st.header("Upload Your Document")
-    user_file = st.file_uploader("Upload your document (Excel)", type=["xlsx"])
 
     if user_file:
         # Read the uploaded file into a DataFrame
@@ -263,15 +306,6 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
-# Sidebar
-with st.sidebar:
-    st.header("Instructions")
-    st.markdown("""
-    1. Upload an Excel file with the required columns: `Title`, `Abstract`, `Publication Year`, `Journal`.
-    2. The app will calculate scores and display the results.
-    3. Download the scored data as an Excel file.
-    """)
 
 # Footer
 st.markdown("---")
