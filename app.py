@@ -5,30 +5,63 @@ import pandas as pd
 import streamlit as st
 from fuzzywuzzy import process, fuzz  # For fuzzy string matching
 
-# Custom CSS to load Roboto
+# Custom CSS for the app
 custom_css = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-/* Apply Roboto to the entire app */
+/* Apply Poppins to the entire app */
 html, body, [class*="css"] {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* Customize headers */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;  /* Bold weight for headers */
     color: #4CAF50;   /* Green color for headers */
 }
 
 /* Customize buttons */
 .stButton>button {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #4CAF50;
     color: white;
     border-radius: 8px;
     padding: 10px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+.stButton>button:hover {
+    background-color: #45a049;
+}
+
+/* Customize sidebar */
+.css-1d391kg {
+    background-color: #F0F2F6;  /* Light gray background */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Center-align the logo */
+.sidebar-logo {
+    display: flex;
+    justify-content: center;  /* Center horizontally */
+    align-items: center;      /* Center vertically */
+}
+
+/* Footer styling */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #e1e4e8;
 }
 </style>
 """
@@ -45,6 +78,11 @@ Upload your list of articles to get started.
 
 # Sidebar
 with st.sidebar:
+    # Centered logo using st.image and custom CSS
+    st.markdown('<div class="sidebar-logo">', unsafe_allow_html=True)
+    st.image("logo.png", width=200)  # Adjust width as needed
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("---")
     st.header("Instructions")
     st.markdown("""
     1. Upload an Excel file with the required columns: `Title`, `Abstract`, `Publication Year`, `Journal`.
@@ -274,12 +312,11 @@ def main():
             st.write(df)
 
             # Download results
-            st.header("Download Results")
             output_file = 'scored_data.xlsx'
             df.to_excel(output_file, index=False)
             with open(output_file, "rb") as file:
                 st.download_button(
-                    label="Download Scored Data",
+                    label=" 📥 Download Your Data ",
                     data=file,
                     file_name=output_file,
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -308,7 +345,4 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Footer
-st.markdown("---")
-st.markdown("""
-2025 Gootee MD. All rights reserved.
-""")
+st.markdown('<div class="footer">© 2025 Gootee MD. All rights reserved.</div>', unsafe_allow_html=True)
