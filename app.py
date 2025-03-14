@@ -147,8 +147,12 @@ def fuzzy_match_journal(journal, journal_list, threshold=90):
 
 # Streamlit app
 def main():
-    st.title("Document Evaluation Tool")
-    st.write("Upload your document for evaluation.")
+    # Title and Description
+    st.title("📄 Article Evaluation Tool")
+    st.markdown("""
+    This tool evaluates articles based on disease prevalence, publication date, study design, and other factors. 
+    Upload your list of articles to get started.
+    """)
 
     # Load the normalized h-index file from the resources folder
     h_index_folder = "resources"  # Folder where the h-index file is stored
@@ -243,3 +247,34 @@ def main():
 # Run the Streamlit app
 if __name__ == "__main__":
     main()
+
+# Custom CSS
+st.markdown("""
+<style>
+    .stButton>button {
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+        padding: 10px 24px;
+        border-radius: 8px;
+    }
+    .stMarkdown h1 {
+        color: #2E86C1;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Sidebar
+with st.sidebar:
+    st.header("Instructions")
+    st.markdown("""
+    1. Upload an Excel file with the required columns: `Title`, `Abstract`, `Publication Year`, `Journal`.
+    2. The app will calculate scores and display the results.
+    3. Download the scored data as an Excel file.
+    """)
+
+# Footer
+st.markdown("---")
+st.markdown("""
+2025 Gootee MD. Allrights reserved.
+""")
