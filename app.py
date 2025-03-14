@@ -1,8 +1,8 @@
-import streamlit as st
-import pandas as pd
-from datetime import datetime
-import re
 import os
+import re
+from datetime import datetime
+import pandas as pd
+import streamlit as st
 from fuzzywuzzy import process, fuzz  # For fuzzy string matching
 
 # Define weights based on the updated formula
@@ -199,11 +199,11 @@ def main():
             df['Matched Journal'] = df['Journal'].apply(lambda x: fuzzy_match_journal(x, journal_list))
 
             # Look up normalized h-index values for each journal (scaled 0-10)
-            df['NHI'] = df['Matched Journal'].map(h_index_dict)
+            df['NHI'] = df['Matched Journal'].map(h_index_dict).fillna(0)
 
             # Check for missing h-index values
             if df['NHI'].isnull().any():
-                st.warning("Warning: Some journals do not have a normalized h-index value in the source document.")
+                st.warning("Warning: Some journals do not have a normalized h-index value in the source document. A default value of 0 has been assigned.")
 
             # Calculate relevance for each row
             df['Relevance'] = df['Title'].apply(lambda x: calculate_relevance(x, keyword_weights))
